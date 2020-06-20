@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>erro 500</title>
+    <link href="{% static "img/favicon.ico" %}" rel="shortcut icon"/>
+    <link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #000082;
+            color: white;
+            font-family: 'Source Code Pro', 'sans-serif';
+        }
+
+        .screen-error {
+            font-size: 1.3rem;
+            padding-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col screen-error">
+            <p class="mb-4 text-right"><a href="{% url 'home' %}">VOLTAR PARA HOME</a></p>
+
+            <p class="mb-4">Um problema foi detectado e o site foi redirecionado para previnir estrago<br>
+                no seu trabalho</p>
+
+            <p class="mb-4 ml-5">500 ERRO INTERNO DO SISTEMA
+            {% if messages %}
+                {% for message in messages %}
+                    <span class="text-danger"> - {{ message }}</span>
+                {% endfor %}
+            {% endif %}
+            </p>
+
+            <p class="mb-4">Se é a primeira ver que você vê essa página de erro<br>
+                tente novamente. Se essa página aparecer novamente, siga<br>
+                estes passos:</p>
+
+            <p class="mb-4">PASSO 1: Entre em contato com o suporte.</p>
+
+            <p class="mb-4">STEP 2: Check to make sure any new hardware or software is properly installed.<br>
+                If this is a new installation, ask your hardware or software manufacturer for<br>
+                any Windows updates you might need.</p>
+
+            <p class="mb-4">STEP 3: If problems continue, disable or remove any newly installed hardware<br>
+                or software, or try to run Chkdsk after a restart of the computer.</p>
+
+            <p class="mb-4">Technical information:</p>
+
+            <p class="mb-4 ml-5">STOP: 0x0000001E (0x80000003, 0xBFC0304, 0x0000000, 0x0000001)</p>
+
+
+            <p class="mb-4">Agora você pode <a href="{% url 'home' %}">CLICAR+AQUI</a> para voltar a página inicial _
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

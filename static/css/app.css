@@ -1,0 +1,20 @@
+textarea {
+    resize: none;
+}
+
+th.colw-33p {
+    width: 33.33%;
+}
+th.colw-23p {
+    width: 23.75%;
+}
+th.colw-20p {
+    width: 20%;
+}
+th.colw-5p {
+    width: 5%;
+}
+
+.sidebar.sidebar-hidden {
+    width: 0!important;
+}

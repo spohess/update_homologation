@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>erro 404</title>
+    <link href="{% static "img/favicon.ico" %}" rel="shortcut icon"/>
+    <link href='//fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Source Code Pro', 'sans-serif';
+        }
+        body::after {
+            content: "";
+            background: url("{% static 'img/404.jpg' %}");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.2;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
+        }
+        .screen-error {
+            font-size: 1.3em;
+            padding-top: 2rem;
+        }
+        .code-error {
+            font-size: 10em;
+            color: #6f6f6f;
+            margin-bottom: -70px;
+        }
+        .message-error {
+            font-size: 2em;
+            color: #6f6f6f;
+            padding-top: -15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col screen-error">
+            <p class="mb-4 text-right"><a href="{% url 'home' %}">VOLTAR PARA HOME</a></p>
+            <p class="text-right code-error">404</p>
+            <p class="text-right message-error">Página não encontrada</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
