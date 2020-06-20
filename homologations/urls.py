@@ -1,9 +1,9 @@
 from django.urls import path
 
-from homologations.views import home_view
+from . import views
 
 app_name = 'homologations'
 
 urlpatterns = [
-    path('', home_view.HomeView.as_view(), name='home'),
+    path('', views.HomeView.as_view(), name='home'),
 ]

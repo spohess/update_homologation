@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'institutional',
-    'homologations',
+    'homologations.apps.HomologationsConfig',
 ]
 
 MIDDLEWARE = [
