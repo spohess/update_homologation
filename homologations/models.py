@@ -42,3 +42,19 @@ class Homologations(TimestampableMixin):
     class Meta:
         verbose_name = 'Homologação'
         verbose_name_plural = 'Homologações'
+
+
+class Keyssh(models.Model):
+    absolute_path = models.CharField(verbose_name='Caminho para chave',
+                                     max_length=128,
+                                     help_text='/home/(usuário)/.ssh/')
+    file_name = models.CharField(verbose_name='Nome do arquivo',
+                                 max_length=32,
+                                 help_text='(arquivo).pub')
+
+    def __str__(self):
+        return self.file_name
+
+    class Meta:
+        verbose_name = 'Chave SSH'
+        verbose_name_plural = 'Chaves SSH'

@@ -1,3 +1,18 @@
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'homologations:home' %}"><i class="fas fa-fw fa-columns"></i><span>Dashboard</span></a>
+    <a class="nav-link" href="{% url 'homologations:home' %}"><i class="fas fa-fw fa-home"></i><span>Home</span></a>
+</li>
+<li class="nav-item">
+    <a href="#"
+       class="nav-link collapsed"
+       data-toggle="collapse"
+       data-target="#menu-segurança"
+       aria-expanded="true"
+       aria-controls="menu-segurança"><i class="fas fa-fw fa-lock"></i><span>Segurança</span></a>
+
+    <div id="menu-segurança" class="collapse">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">OPÇÕES:</h6>
+            <a class="collapse-item" href="{% url 'homologations:keyssh' %}"><i class="fas fa-fw fa-key"></i> <span>Chave SSH</span></a>
+        </div>
+    </div>
 </li>

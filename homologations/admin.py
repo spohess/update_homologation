@@ -11,3 +11,11 @@ class HomologationsList(admin.ModelAdmin):
 
 
 admin.site.register(models.Homologations, HomologationsList)
+
+
+class KeysshList(admin.ModelAdmin):
+    list_display = ('id', 'file_name')
+    list_display_links = ('id', 'file_name')
+
+
+admin.site.register(models.Keyssh, KeysshList)
