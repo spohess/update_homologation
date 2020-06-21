@@ -44,13 +44,17 @@ class Homologations(TimestampableMixin):
         verbose_name_plural = 'Homologações'
 
 
-class Keyssh(models.Model):
+class Keyssh(TimestampableMixin):
     absolute_path = models.CharField(verbose_name='Caminho para chave',
                                      max_length=128,
                                      help_text='/home/(usuário)/.ssh/')
     file_name = models.CharField(verbose_name='Nome do arquivo',
                                  max_length=32,
                                  help_text='(arquivo).pub')
+    active = models.BooleanField(verbose_name='Ativo',
+                                 unique=True,
+                                 default=True,
+                                 help_text='Arquivo está ativo')
 
     def __str__(self):
         return self.file_name

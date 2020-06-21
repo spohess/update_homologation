@@ -7,4 +7,25 @@
         <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-key text-primary"></i> Chave SSH</h1>
     </div>
 
+    <div class="row">
+        <div class="col-12 col-xl-6">
+            <div class="alert alert-warning">
+                <strong><i class="fas fa-exclamation-triangle"></i> Atenção</strong>
+                <hr>
+                <p>Esta é a chave ativa do usuário do SO e é usado para autênticação no reposítório git do projeto,
+                    certifique-se que essa chave tenha as devidas permissões no repositrório</p>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Chave ativa</h6>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <textarea class="form-control" disabled rows="15">{{ file }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
