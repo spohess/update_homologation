@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -57,6 +60,24 @@ class Homologations(TimestampableMixin):
 
     def project_description_normalized(self):
         return self.project_description if self.project_description else '-'
+
+    def formatter(self):
+        project_absolute_folder = os.path.join(settings.REPOSITORIES_FOLDER, self.project_folder),
+        return {
+            'pk': self.pk,
+            'project_name': self.project_name,
+            'project_folder': self.project_folder,
+            'project_absolute_folder': project_absolute_folder[0],
+            'git_repository_url': self.git_repository_url,
+            'docker_folder': self.docker_folder_normalized,
+            'container_name': self.container_name_normalized,
+            'container_port': self.container_port_normalized,
+            'settings_file': self.settings_file_normalized,
+            'project_description': self.project_description_normalized,
+            'responsible': '{0} {1}'.format(self.user.first_name, self.user.last_name),
+            'user': self.user,
+            'file_exists': os.path.isdir(project_absolute_folder[0]),
+        }
 
     class Meta:
         verbose_name = 'Homologação'
