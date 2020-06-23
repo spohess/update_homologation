@@ -1,10 +1,14 @@
 from django.urls import path
 
-from . import views
+from homologations.views.home_view import HomeView
+from homologations.views.project_view import ProjectClone
+from homologations.views.security_view import KeysshView
 
 app_name = 'homologations'
 
 urlpatterns = [
-    path('home/', views.HomeView.as_view(), name='home'),
-    path('keyssh/', views.KeysshView.as_view(), name='keyssh'),
+    path('home/', HomeView.as_view(), name='home'),
+    path('keyssh/', KeysshView.as_view(), name='keyssh'),
+
+    path('project/clone/<int:pk>', ProjectClone.as_view(), name='project_clone'),
 ]

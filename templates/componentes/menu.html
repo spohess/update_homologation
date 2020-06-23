@@ -16,3 +16,8 @@
         </div>
     </div>
 </li>
+{% if user.is_superuser %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'admin:index' %}"><i class="fas fa-fw fa-user-shield"></i><span>Administração</span></a>
+</li>
+{% endif %}

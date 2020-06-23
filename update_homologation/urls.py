@@ -26,7 +26,7 @@ from django.urls import path, include, reverse_lazy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect(reverse_lazy('login'), permanent=True)),
+    path('', lambda request: redirect(reverse_lazy('institutional:login'), permanent=True)),
     path('institutional/', include('institutional.urls')),
     path('homologations/', include('homologations.urls')),
 ]
