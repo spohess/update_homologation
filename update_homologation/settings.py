@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 
 import environ
@@ -35,6 +36,8 @@ LOGGING = {
     },
 }
 
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, '../apps'))
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
