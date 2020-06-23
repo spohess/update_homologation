@@ -8,68 +8,42 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-xl-6">
-            {% for homologation in homologations_list %}
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ homologation.project_name }}</h6>
-                        <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                               data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                 aria-labelledby="dropdownMenuLink" x-placement="bottom-end">
-                                <div class="dropdown-header">AÇÕES:</div>
-                                {% if not homologation.file_exists %}
-                                    <a class="dropdown-item" href="{% url 'homologations:project_clone' homologation.pk %}">Clonar projeto</a>
-                                {% else %}
-                                    <a class="dropdown-item" href="#">Reclonar projeto</a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Responsável: <strong>{{ homologation.responsible }}</strong>
-                            </li>
-                            <li class="list-group-item list-group-item-{% if homologation.file_exists %}success{% else %}danger{% endif %}">
-                                Diretório: <strong>{{ homologation.project_absolute_folder }}</strong>
-                                {% if not homologation.file_exists %}
-                                    <span class="badge badge-danger badge-pill">NÃO CRIADO</span>
-                                {% else %}
-                                    <span class="badge badge-success badge-pill">CRIADO</span>
-                                {% endif %}
-                            </li>
-                            <li class="list-group-item">URL: <strong>{{ homologation.git_repository_url }}</strong></li>
-                            <li class="list-group-item">
-                                Diretório docker-compose.yml: <strong>{{ homologation.docker_folder }}</strong>
-                            </li>
-                            <li class="list-group-item">
-                                Nome container: <strong>{{ homologation.container_name }}</strong>
-                            </li>
-                            <li class="list-group-item">
-                                Posta do container: <strong>{{ homologation.container_port }}</strong>
-                            </li>
-                            <li class="list-group-item">
-                                Arquivo de configuração:
-                                <textarea class="form-control"
-                                          rows="15"
-                                          disabled>{{ homologation.settings_file }}</textarea>
-                            </li>
-                            <li class="list-group-item">
-                                Descrição:
-                                <textarea class="form-control"
-                                          rows="15"
-                                          disabled>{{ homologation.project_description }}</textarea>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista de homologações</h6>
                 </div>
-            {% endfor %}
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="colw-20p" scope="col">STATUS</th>
+                            <th class="colw-25p" scope="col">NOME</th>
+                            <th class="colw-25p" scope="col">DIRETÓRIO</th>
+                            <th class="colw-25p" scope="col">RESPONSÁVEL</th>
+                            <th class="colw-5p text-center" scope="col">DETALHES</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for homologation in homologations_list %}
+                            <tr class="table-{% if homologation.file_exists %}success{% else %}danger{% endif %}">
+                                {% if homologation.file_exists %}
+                                    <td>CLONADO</td>
+                                {% else %}
+                                    <td>NÃO CLONADO</td>
+                                {% endif %}
+                                <td>{{ homologation.project_name }}</td>
+                                <td>{{ homologation.project_folder }}</td>
+                                <td>{{ homologation.responsible }}</td>
+                                <td class="text-center">
+                                    <a href="#"><i class="fas fa-search"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
