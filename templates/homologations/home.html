@@ -36,7 +36,7 @@
                                 <td>{{ homologation.project_folder }}</td>
                                 <td>{{ homologation.responsible }}</td>
                                 <td class="text-center">
-                                    <a href="#"><i class="fas fa-search"></i></a>
+                                    <a href="{% url 'homologations:project_detail' homologation.pk %}"><i class="fas fa-search"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}
