@@ -8,15 +8,97 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-xl-6">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ homologation.project_name }}</h6>
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Homologação</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle"
+                           href="#" role="button"
+                           id="homologation_actions"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="homologation_actions"
+                             x-placement="bottom-end">
+                            <div class="dropdown-header">AÇÕES GIT:</div>
+                            <a class="dropdown-item action_project" href="#" data-action="{% url 'homologations:project_clone' homologation.pk %}">Clonar</a>
+                            <a class="dropdown-item action_project" href="#" data-action="{% url 'homologations:project_reclone' homologation.pk %}">Reclonar</a>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-header">AÇÕES DOCKER:</div>
+                            <a class="dropdown-item" href="#">Docker UP</a>
+                            <a class="dropdown-item" href="#">Docker STOP</a>
+                            <a class="dropdown-item" href="#">Docker DOWN</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Responsável: <strong>{{ homologation.responsible }}</strong>
+                        </li>
+                        <li class="list-group-item list-group-item-{% if homologation.file_exists %}success{% else %}danger{% endif %} d-flex justify-content-between align-items-center">
+                            Diretório: {{ homologation.project_absolute_folder }}
+                            {% if not homologation.file_exists %}
+                                <span class="badge badge-danger badge-pill">NÃO CLONADO</span>
+                            {% else %}
+                                <span class="badge badge-success badge-pill">CLONADO</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">URL: <strong>{{ homologation.git_repository_url }}</strong></li>
+                        <li class="list-group-item">
+                            Diretório docker-compose.yml: <strong>{{ homologation.docker_folder }}</strong>
+                        </li>
+                        <li class="list-group-item">
+                            Nome container: <strong>{{ homologation.container_name }}</strong>
+                        </li>
+                        <li class="list-group-item">
+                            Posta do container: <strong>{{ homologation.container_port }}</strong>
+                        </li>
+                        <li class="list-group-item">
+                            Arquivo de configuração:
+                            <textarea class="form-control"
+                                      rows="15"
+                                      disabled>{{ homologation.settings_file }}</textarea>
+                        </li>
+                        <li class="list-group-item">
+                            Descrição:
+                            <textarea class="form-control"
+                                      rows="15"
+                                      disabled>{{ homologation.project_description }}</textarea>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xl-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Retorno dos comandos</h6>
                 </div>
                 <div class="card-body">
-
+                    <textarea class="form-control" rows="40" disabled id="action_output">{{ folder_content }}</textarea>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block js_system %}
+    <script>
+        $(document).ready(function () {
+            $('.action_project').on('click', function () {
+                let url = $(this).data('action')
+                $.get(url, function (response) {
+                    $('#action_output').text(response.command_output)
+                })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        $('#action_output').text(errorThrown + '\n\n' + jqXHR.responseText)
+                    });
+            })
+        })
+    </script>
 {% endblock %}

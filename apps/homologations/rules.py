@@ -2,8 +2,6 @@ import os
 
 from django.conf import settings
 
-from homologations.models import Homologations
-
 
 class ProjetcRule:
 
@@ -19,16 +17,14 @@ class ProjetcRule:
         command = 'ls -lah {0}{1}'.format(settings.REPOSITORIES_FOLDER, homologation.project_folder)
         return os.popen(command).read()
 
-    def clone_project(self, kwargs):
-        homologation = Homologations.objects.get(pk=kwargs['pk'])
+    def clone_project(self, homologation):
 
         if not os.path.isdir(settings.REPOSITORIES_FOLDER + homologation.project_folder):
             return self.__execute_git_clone(homologation)
 
         return 'Diretório não está vazio'
 
-    def reclone_project(self, kwargs):
-        homologation = Homologations.objects.get(pk=kwargs['pk'])
+    def reclone_project(self, homologation):
 
         command = 'rm -rdf {0}{1}'.format(settings.REPOSITORIES_FOLDER, homologation.project_folder.replace('/', ''))
         os.system(command)

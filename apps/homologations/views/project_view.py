@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
@@ -18,24 +19,22 @@ class ProjectDetail(TemplateView):
 
 
 class ProjectClone(TemplateView):
-    template_name = 'homologations/project/output.html'
-
     def get(self, request, *args, **kwargs):
+        homologation = Homologations.objects.get(pk=kwargs['pk'])
         projetc_rule = ProjetcRule(request)
 
-        context = {
-            'folder_content': projetc_rule.clone_project(kwargs=kwargs),
+        data = {
+            'command_output': projetc_rule.clone_project(homologation),
         }
-        return render(request, self.template_name, context)
+        return JsonResponse(data=data)
 
 
 class ProjectReclone(TemplateView):
-    template_name = 'homologations/project/output.html'
-
     def get(self, request, *args, **kwargs):
+        homologation = Homologations.objects.get(pk=kwargs['pk'])
         projetc_rule = ProjetcRule(request)
 
-        context = {
-            'folder_content': projetc_rule.clone_project(kwargs=kwargs),
+        data = {
+            'command_output': projetc_rule.reclone_project(homologation),
         }
-        return render(request, self.template_name, context)
+        return JsonResponse(data=data)
