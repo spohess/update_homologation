@@ -6,36 +6,26 @@ from django.db import models
 
 from mixins.models_mixins import TimestampableMixin
 
+DOCKER_SERVICE_TYPES = [
+    ('database', 'Banco de Dados'),
+    ('webserver', 'Servidor Web'),
+    ('others', 'Outros'),
+]
 
-class Homologations(TimestampableMixin):
+
+class Homologation(TimestampableMixin):
     project_name = models.CharField(verbose_name='Nome do projeto',
                                     max_length=128)
     project_folder = models.CharField(verbose_name='Diretório do projeto',
                                       max_length=32,
-                                      help_text='Nome do diretório que será usado para criar o projeto',)
+                                      help_text='Nome do diretório que será usado para criar o projeto', )
     git_repository_url = models.CharField(verbose_name='URL Git',
                                           max_length=255,
                                           help_text='git remote url ssh: git@(domínio):(usuário)/(projeto).git')
     docker_folder = models.CharField(verbose_name='Diretório do docker',
                                      max_length=32,
-                                     help_text='Nome do diretório onde fica o arquivo docker-composer,'
-                                               ' se for na raiz deixe em branco',
-                                     null=True,
-                                     blank=True)
-    container_name = models.CharField(verbose_name='Nome do Container',
-                                      max_length=128,
-                                      help_text='Nome dado para o cotainer principal do docker',
-                                      null=True,
-                                      blank=True)
-    container_port = models.CharField(verbose_name='Porta do Container',
-                                      max_length=128,
-                                      help_text='Número da porta dada para o cotainer principal do docker',
-                                      null=True,
-                                      blank=True)
-    settings_file = models.TextField(verbose_name='Configurações .env',
-                                     help_text='Configurações que serão copiadas para o .env',
-                                     null=True,
-                                     blank=True)
+                                     help_text='Nome do diretório onde fica o arquivo docker-composer, coloque "." '
+                                               'se estiver na raiz')
     project_description = models.TextField(verbose_name='Descrição',
                                            null=True,
                                            blank=True)
@@ -49,15 +39,6 @@ class Homologations(TimestampableMixin):
     def docker_folder_normalized(self):
         return self.docker_folder if self.docker_folder else '-'
 
-    def container_name_normalized(self):
-        return self.container_name if self.container_name else '-'
-
-    def container_port_normalized(self):
-        return self.container_port if self.container_port else '-'
-
-    def settings_file_normalized(self):
-        return self.settings_file if self.settings_file else '-'
-
     def project_description_normalized(self):
         return self.project_description if self.project_description else '-'
 
@@ -70,9 +51,6 @@ class Homologations(TimestampableMixin):
             'project_absolute_folder': project_absolute_folder[0],
             'git_repository_url': self.git_repository_url,
             'docker_folder': self.docker_folder_normalized,
-            'container_name': self.container_name_normalized,
-            'container_port': self.container_port_normalized,
-            'settings_file': self.settings_file_normalized,
             'project_description': self.project_description_normalized,
             'responsible': '{0} {1}'.format(self.user.first_name, self.user.last_name),
             'user': self.user,
@@ -82,6 +60,27 @@ class Homologations(TimestampableMixin):
     class Meta:
         verbose_name = 'Homologação'
         verbose_name_plural = 'Homologações'
+
+
+class DockerContainer(TimestampableMixin):
+    homologation = models.ForeignKey(Homologation,
+                                     on_delete=models.PROTECT)
+    container_name = models.CharField(verbose_name='Nome do container',
+                                      max_length=128,
+                                      help_text='Nome que é usado para acessar o container')
+    container_type = models.CharField(verbose_name='Tipo de serviço do container',
+                                      max_length=32,
+                                      choices=DOCKER_SERVICE_TYPES)
+    container_port = models.IntegerField(verbose_name='Porta externa de acesso',
+                                         null=True,
+                                         blank=True)
+
+    def __str__(self):
+        return self.container_name
+
+    class Meta:
+        verbose_name = 'Serviço Docker'
+        verbose_name_plural = 'Serviços Docker'
 
 
 class Keyssh(TimestampableMixin):

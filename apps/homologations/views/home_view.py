@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from homologations.models import Homologations
+from homologations.models import Homologation
 
 
 class HomeView(TemplateView):
     template_name = 'homologations/home.html'
 
     def get(self, request, *args, **kwargs):
-        homologations = Homologations.objects.all()
+        homologations = Homologation.objects.all()
         homologations_list = []
         for homologation in homologations:
             homologations_list.append(homologation.formatter())
